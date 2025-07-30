@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .cart-item-enter {
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .quantity-btn:hover {
+            transform: scale(1.1);
+        }
+        .checkout-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .checkout-btn:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold text-gray-800 flex items-center">
+                    🛒 Shopping Cart
+                </h1>
+                <div class="text-right">
+                    <p class="text-sm text-gray-600">Items in cart</p>
+                    <p class="text-2xl font-bold text-indigo-600" id="itemCount">3</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Items -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+            <div id="cartItems" class="space-y-4">
+                <!-- Sample Item 1 -->
+                <div class="cart-item flex items-center justify-between p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-red-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                            👕
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Premium T-Shirt</h3>
+                            <p class="text-sm text-gray-600">Size: M, Color: Blue</p>
+                            <p class="text-lg font-bold text-indigo-600">MRU 1,199</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button class="quantity-btn w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-all" onclick="updateQuantity(this, -1)">
+                            <span class="text-gray-600 font-bold">−</span>
+                        </button>
+                        <span class="quantity w-8 text-center font-semibold">2</span>
+                        <button class="quantity-btn w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-all" onclick="updateQuantity(this, 1)">
+                            <span class="text-gray-600 font-bold">+</span>
+                        </button>
+                        <button class="ml-4 text-red-500 hover:text-red-700 transition-colors" onclick="removeItem(this)">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Item 2 -->
+                <div class="cart-item flex items-center justify-between p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                            👟
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Running Shoes</h3>
+                            <p class="text-sm text-gray-600">Size: 10, Color: Black</p>
+                            <p class="text-lg font-bold text-indigo-600">MRU 3,599</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button class="quantity-btn w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-all" onclick="updateQuantity(this, -1)">
+                            <span class="text-gray-600 font-bold">−</span>
+                        </button>
+                        <span class="quantity w-8 text-center font-semibold">1</span>
+                        <button class="quantity-btn w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-all" onclick="updateQuantity(this, 1)">
+                            <span class="text-gray-600 font-bold">+</span>
+                        </button>
+                        <button class="ml-4 text-red-500 hover:text-red-700 transition-colors" onclick="removeItem(this)">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Item 3 -->
+                <div class="cart-item flex items-center justify-between p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                            🎧
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Wireless Headphones</h3>
+                            <p class="text-sm text-gray-600">Color: White, Noise Cancelling</p>
+                            <p class="text-lg font-bold text-indigo-600">MRU 7,999</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button class="quantity-btn w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-all" onclick="updateQuantity(this, -1)">
+                            <span class="text-gray-600 font-bold">−</span>
+                        </button>
+                        <span class="quantity w-8 text-center font-semibold">1</span>
+                        <button class="quantity-btn w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-all" onclick="updateQuantity(this, 1)">
+                            <span class="text-gray-600 font-bold">+</span>
+                        </button>
+                        <button class="ml-4 text-red-500 hover:text-red-700 transition-colors" onclick="removeItem(this)">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty Cart Message (hidden by default) -->
+            <div id="emptyCart" class="hidden text-center py-12">
+                <div class="text-6xl mb-4">🛒</div>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">Your cart is empty</h3>
+                <p class="text-gray-500">Add some items to get started!</p>
+            </div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Order Summary</h2>
+            
+            <div class="space-y-3 mb-6">
+                <div class="flex justify-between text-gray-600">
+                    <span>Subtotal</span>
+                    <span id="subtotal">MRU 12,797</span>
+                </div>
+                <div class="flex justify-between text-gray-600">
+                    <span>Shipping</span>
+                    <span>MRU 399</span>
+                </div>
+                <div class="flex justify-between text-gray-600">
+                    <span>Tax</span>
+                    <span id="tax">MRU 1,056</span>
+                </div>
+                <hr class="border-gray-200">
+                <div class="flex justify-between text-xl font-bold text-gray-800">
+                    <span>Total</span>
+                    <span id="total">MRU 14,252</span>
+                </div>
+            </div>
+
+            <!-- Promo Code -->
+            <div class="mb-6">
+                <div class="flex space-x-2">
+                    <input type="text" placeholder="Enter promo code" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <button class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors">Apply</button>
+                </div>
+            </div>
+
+            <!-- Checkout Button -->
+            <button onclick="checkoutViaWhatsApp()" class="checkout-btn w-full py-4 text-white font-semibold rounded-xl transition-all transform hover:scale-105 shadow-lg">
+                Checkout via WhatsApp 📱
+            </button>
+
+            <!-- Continue Shopping -->
+            <button class="w-full mt-3 py-3 text-indigo-600 font-medium hover:text-indigo-800 transition-colors">
+                ← Continue Shopping
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function updateQuantity(button, change) {
+            const quantitySpan = button.parentElement.querySelector('.quantity');
+            let quantity = parseInt(quantitySpan.textContent);
+            quantity = Math.max(1, quantity + change);
+            quantitySpan.textContent = quantity;
+            updateTotals();
+        }
+
+        function removeItem(button) {
+            const cartItem = button.closest('.cart-item');
+            cartItem.style.animation = 'slideOut 0.3s ease-in';
+            setTimeout(() => {
+                cartItem.remove();
+                updateTotals();
+                checkEmptyCart();
+            }, 300);
+        }
+
+        function updateTotals() {
+            const items = document.querySelectorAll('.cart-item');
+            let subtotal = 0;
+            let itemCount = 0;
+
+            items.forEach(item => {
+                const priceText = item.querySelector('.text-lg.font-bold.text-indigo-600').textContent;
+                const price = parseFloat(priceText.replace('MRU ', '').replace(',', ''));
+                const quantity = parseInt(item.querySelector('.quantity').textContent);
+                subtotal += price * quantity;
+                itemCount += quantity;
+            });
+
+            const shipping = 399;
+            const tax = subtotal * 0.0825; // 8.25% tax
+            const total = subtotal + shipping + tax;
+
+            document.getElementById('subtotal').textContent = `MRU ${subtotal.toLocaleString()}`;
+            document.getElementById('tax').textContent = `MRU ${Math.round(tax).toLocaleString()}`;
+            document.getElementById('total').textContent = `MRU ${Math.round(total).toLocaleString()}`;
+            document.getElementById('itemCount').textContent = itemCount;
+        }
+
+        function checkEmptyCart() {
+            const cartItems = document.querySelectorAll('.cart-item');
+            const emptyCart = document.getElementById('emptyCart');
+            const cartItemsContainer = document.getElementById('cartItems');
+
+            if (cartItems.length === 0) {
+                cartItemsContainer.style.display = 'none';
+                emptyCart.classList.remove('hidden');
+            }
+        }
+
+        function checkoutViaWhatsApp() {
+            const items = document.querySelectorAll('.cart-item');
+            let orderDetails = "🛒 *New Order*\n\n";
+            let subtotal = 0;
+
+            items.forEach((item, index) => {
+                const name = item.querySelector('h3').textContent;
+                const details = item.querySelector('.text-sm.text-gray-600').textContent;
+                const priceText = item.querySelector('.text-lg.font-bold.text-indigo-600').textContent;
+                const price = parseFloat(priceText.replace('MRU ', '').replace(',', ''));
+                const quantity = parseInt(item.querySelector('.quantity').textContent);
+                const itemTotal = price * quantity;
+                subtotal += itemTotal;
+
+                orderDetails += `${index + 1}. *${name}*\n`;
+                orderDetails += `   ${details}\n`;
+                orderDetails += `   Quantity: ${quantity}\n`;
+                orderDetails += `   Price: MRU ${itemTotal.toLocaleString()}\n\n`;
+            });
+
+            const shipping = 399;
+            const tax = Math.round(subtotal * 0.0825);
+            const total = subtotal + shipping + tax;
+
+            orderDetails += `📋 *Order Summary:*\n`;
+            orderDetails += `Subtotal: MRU ${subtotal.toLocaleString()}\n`;
+            orderDetails += `Shipping: MRU ${shipping.toLocaleString()}\n`;
+            orderDetails += `Tax: MRU ${tax.toLocaleString()}\n`;
+            orderDetails += `*Total: MRU ${total.toLocaleString()}*\n\n`;
+            orderDetails += `Please confirm this order and provide delivery details. Thank you! 😊`;
+
+            // Replace with your WhatsApp business number
+            const phoneNumber = "22200000000"; // Replace with actual number
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(orderDetails)}`;
+            
+            window.open(whatsappURL, '_blank');
+        }
+
+        // Add slide out animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideOut {
+                from { opacity: 1; transform: translateX(0); }
+                to { opacity: 0; transform: translateX(100%); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9675dd20b351d209',t:'MTc1Mzg4OTA3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
